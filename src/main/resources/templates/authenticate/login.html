@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New user</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 850px;
+            table-layout: fixed;
+        }
+
+        th {
+            background: #fc0;
+        }
+
+        td {
+            background: #fff;
+            word-break: break-all;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 4px;
+            text-align: center;
+            width: 200px;
+            white-space: normal;
+        }
+
+        th:first-child, td:first-child {
+            width: 30px !important;
+        }
+
+        form {
+            width: 250px;
+        }
+
+        label {
+            width: 80px;
+            padding-right: 20px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <br/>
+    <h2>Log in to use our website:</h2>
+
+    <div style="color: red" th:if="${param.error}">
+        Bad credentials!
+    </div>
+    <form method="POST" action="/login">
+        <fieldset>
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required/>
+            <br/>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required/>
+            <br/>
+            <div th:each="role, iterStat : ${roles}">Roles:
+                <label>
+                    <input type="checkbox"
+                           th:name="roles"
+                           th:value="${role.id}"
+                           th:checked="${user.roles != null && user.roles.contains(role)}"/>
+                    <span th:text="${role.getRole()}"></span>
+                </label>
+            </div>
+        </fieldset>
+        <br/>
+        <input type="submit" value="Login"/>
+    </form>
+</div>
+</body>
+</html>
+

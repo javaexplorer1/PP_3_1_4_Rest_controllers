@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <title>Users</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 850px;
+            table-layout: fixed;
+        }
+
+        th {
+            background: #fc0;
+        }
+
+        td {
+            background: #fff;
+            word-break: break-all;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 4px;
+            text-align: center;
+            width: 200px;
+            white-space: normal;
+        }
+
+        th:first-child, td:first-child {
+            width: 30px !important;
+        }
+        th:last-child, td:last-child {
+            width: 150px !important;
+        }
+
+        .inner
+        {
+            float:left;
+            margin-left: 10px;
+        }
+
+        .button {
+            display: inline-block;
+            width: 50px;
+            height: 15px;
+            background: #4E9CAF;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .add_user {
+            background: limegreen;
+            width: 150px;
+            text-decoration: none;
+        }
+
+        form {
+            width: 250px;
+        }
+
+        label {
+            width: 80px;
+            padding-right: 20px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">logout</button>
+    </form>
+    <br/>
+    <h2>All users:</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Roles</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:utext="${user.getId()}"></td>
+            <td th:utext="${user.getUsername()}"></td>
+            <td th:utext="${user.getAge()}"></td>
+            <td th:utext="${user.getEmail()}"></td>
+            <td th:utext="${user.getPassword()}"></td>
+            <td> <span th:each="role : ${user.roles}" th:text="${role.role} + ' '"></span> </td>
+            <td>
+                <a th:href="@{/admin/edit(id=${user.id})}">
+                    <button type="button" class="inner">&nbsp;&nbsp;Edit&nbsp;&nbsp;</button>
+                </a>
+
+                <form th:method="POST" th:action="@{/admin/delete(id=${user.id})}">
+                    <button type="submit" class="inner">Delete</button>
+                </form>
+
+            </td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <br>
+    <div><a class="button add_user" th:href="@{/admin/new_user}">Add new user</a></div>
+
+</div>
+</body>
+</html>

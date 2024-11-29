@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 850px;
+            table-layout: fixed;
+        }
+
+        th {
+            background: #fc0;
+        }
+
+        td {
+            background: #fff;
+            word-break: break-all;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 4px;
+            text-align: center;
+            width: 200px;
+            white-space: normal;
+        }
+
+        th:first-child, td:first-child {
+            width: 30px !important;
+        }
+
+        form {
+            width: 250px;
+        }
+
+        label {
+            width: 80px;
+            padding-right: 20px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+    <title>Users</title>
+</head>
+<body>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">logout</button>
+</form>
+<div>
+    <h2>User:</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Roles</th>
+        </tr>
+        <tr>
+            <td th:utext="${user.getId()}"></td>
+            <td th:utext="${user.getUsername()}"></td>
+            <td th:utext="${user.getAge()}"></td>
+            <td th:utext="${user.getEmail()}"></td>
+            <td th:utext="${user.getPassword()}"></td>
+            <td> <span th:each="role : ${user.roles}" th:text="${role.role} + ' '"></span> </td>
+
+
+        </tr>
+    </table>
+</div>
+</body>
+</html>

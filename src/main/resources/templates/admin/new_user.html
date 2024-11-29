@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New user</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 850px;
+      table-layout: fixed;
+    }
+
+    th {
+      background: #fc0;
+    }
+
+    td {
+      background: #fff;
+      word-break: break-all;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 4px;
+      text-align: center;
+      width: 200px;
+      white-space: normal;
+    }
+
+    th:first-child, td:first-child {
+      width: 30px !important;
+    }
+
+    .button {
+      display: inline-block;
+      width: 50px;
+      height: 15px;
+      background: #4E9CAF;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    form {
+      width: 250px;
+    }
+
+    label {
+      width: 80px;
+      padding-right: 20px;
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+
+    input {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+<div>
+<form th:action="@{/logout}" method="post">
+  <button type="submit">logout</button>
+</form>
+<br/>
+  <h2>New user:</h2>
+  <form th:method="POST" th:action="@{/admin/new_user}" th:object="${user}">
+    <fieldset>
+      <label for="username">Username:</label>
+      <input type="text" th:field="*{username}" id="username" required/>
+      <br/>
+      <label for="age">Age:</label>
+      <input type="text" th:field="*{age}" id="age" required/>
+      <br/>
+      <label for="email">Email:</label>
+      <input type="text" th:field="*{email}" id="email" required/>
+      <br/>
+      <label for="password">Password:</label>
+      <input type="password" th:field="*{password}" id="password" required/>
+      <br/>
+      <div th:each="role, iterStat : ${roles}">Roles:
+        <label>
+          <input type="checkbox"
+                 th:name="roles"
+                 th:value="${role.id}"
+                 th:checked="${user.roles != null && user.roles.contains(role)}"/>
+          <span th:text="${role.getRole()}"></span>
+        </label>
+      </div>
+    </fieldset>
+    <br/>
+    <input type="submit" value="Create user"/>
+  </form>
+
+<br>
+<a th:href="@{/admin/users}" class="button">Cancel</a>
+</div>
+</body>
+</html>
