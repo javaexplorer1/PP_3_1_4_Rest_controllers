@@ -6,8 +6,8 @@ INSERT INTO roles(role)
 VALUES ('ROLE_USER'), ('ROLE_ADMIN');
 
 INSERT INTO users_roles(user_id, role_id)
-VALUES (1, 1), (2,2);
+VALUES (1, 1), (2,2), (2,1);
 
---     (1, 'ROLE_USER'), (2, )
+
 
 
