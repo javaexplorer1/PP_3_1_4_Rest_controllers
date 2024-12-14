@@ -4,9 +4,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,19 +20,25 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Username should not be empty")
     @Column(name = "username")
     private String username;
 
+    @Min(value = 0, message = "Age should be greater than 0")
     @Column(name = "age")
     private String age;
 
+    @NotBlank(message = "Email should not be empty")
+    @Email
     @Column(name = "email")
     private String email;
 
+    @NotBlank(message = "Password should not be empty")
+    @Size(min = 4, max = 100, message = "Password must be between 4 and 100 characters")
     @Column(name = "password")
     private String password;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -115,4 +124,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
